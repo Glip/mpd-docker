@@ -1,4 +1,4 @@
-# CNC Tunnel
+# MPD
 
 Simple docker image for MPD
 
