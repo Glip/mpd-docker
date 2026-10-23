@@ -26,6 +26,7 @@ RUN apk add --no-cache \
         libmpdclient-dev \
         libogg-dev \
         libvorbis-dev \
+        libshout-dev \
         mpg123-dev \
         opusfile-dev \
         pcre2-dev \
@@ -47,7 +48,7 @@ RUN curl -fsSL --retry 5 --retry-all-errors --retry-delay 2 \
     && tar -xf mpd.tar.gz -C mpd --strip-components=1 \
     && tar -xf mpc.tar.gz -C mpc --strip-components=1
 
-# Codecs and outputs are limited to what a network music library usually needs.
+# Codecs and outputs cover a music library plus Icecast (shout).
 # FFmpeg, ICU, Avahi, Pulse and UPnP are left out: they dominate the image size.
 WORKDIR /src/mpd
 RUN meson setup build \
@@ -113,7 +114,7 @@ RUN meson setup build \
         -Doss=disabled \
         -Dpipewire=disabled \
         -Dpulse=disabled \
-        -Dshout=disabled \
+        -Dshout=enabled \
         -Dsndio=disabled \
         -Dsolaris_output=disabled \
         -Ddbus=disabled \
@@ -152,6 +153,7 @@ RUN apk add --no-cache \
         libgcc \
         libid3tag \
         libmpdclient \
+        libshout \
         libstdc++ \
         libvorbis \
         mpg123-libs \
